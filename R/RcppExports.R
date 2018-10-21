@@ -3,14 +3,15 @@
 
 #' A mininmal example
 #' @param obj Numeric vector of size \eqn{K}. Coeficients in the objective function.
-#' @param M Numeric matrix of size \eqn{K\times m}. Constraints.
+#' @param subj_lhs Numeric matrix of size \eqn{K\times m}. Constraints.
 #' @param pname Character scalar. Name of the LP.
 #' @export
 #' @examples
-#' obj <- c(10, 6, 4)
-#' dat <- matrix(c(1, 10, 2, 1, 4, 2, 1, 5, 6), ncol=3)
-#' glpk_example(obj, dat)
-glpk_example <- function(obj, M, pname = "sample") {
-    .Call(`_rcppglpk_glpk_example`, obj, M, pname)
+#' obj      <- c(10, 6, 4)
+#' subj_lhs <- matrix(c(1, 10, 2, 1, 4, 2, 1, 5, 6), ncol = 3)
+#' subj_rhs <- c(100, 600, 300)
+#' glpk_example(obj, subj_lhs, subj_rhs)
+glpk_example <- function(obj, subj_lhs, subj_rhs, pname = "sample") {
+    .Call(`_rcppglpk_glpk_example`, obj, subj_lhs, subj_rhs, pname)
 }
 

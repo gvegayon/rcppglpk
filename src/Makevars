@@ -1,1 +1,2 @@
 PKG_LIBS = -lglpk
+PKG_CXXFLAGS = -I../inst/include

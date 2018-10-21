@@ -4,12 +4,12 @@
 \alias{glpk_example}
 \title{A mininmal example}
 \usage{
-glpk_example(obj, M, pname = "sample")
+glpk_example(obj, subj_lhs, subj_rhs, pname = "sample")
 }
 \arguments{
 \item{obj}{Numeric vector of size \eqn{K}. Coeficients in the objective function.}
 
-\item{M}{Numeric matrix of size \eqn{K\times m}. Constraints.}
+\item{subj_lhs}{Numeric matrix of size \eqn{K\times m}. Constraints.}
 
 \item{pname}{Character scalar. Name of the LP.}
 }
@@ -17,7 +17,8 @@ glpk_example(obj, M, pname = "sample")
 A mininmal example
 }
 \examples{
-obj <- c(10, 6, 4)
-dat <- matrix(c(1, 10, 2, 1, 4, 2, 1, 5, 6), ncol=3)
-glpk_example(obj, dat)
+obj      <- c(10, 6, 4)
+subj_lhs <- matrix(c(1, 10, 2, 1, 4, 2, 1, 5, 6), ncol = 3)
+subj_rhs <- c(100, 600, 300)
+glpk_example(obj, subj_lhs, subj_rhs)
 }
