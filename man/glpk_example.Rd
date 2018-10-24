@@ -4,7 +4,9 @@
 \alias{glpk_example}
 \title{A mininmal example}
 \usage{
-glpk_example(obj, subj_lhs, subj_rhs, pname = "sample")
+glpk_example(obj, subj_lhs, subj_rhs, cols_bnds_type, cols_bnds_lb,
+  cols_bnds_ub, rows_bnds_type, rows_bnds_lb, rows_bnds_ub, DIR,
+  pname = "sample")
 }
 \arguments{
 \item{obj}{Numeric vector of size \eqn{K}. Coeficients in the objective function.}
@@ -20,5 +22,19 @@ A mininmal example
 obj      <- c(10, 6, 4)
 subj_lhs <- matrix(c(1, 10, 2, 1, 4, 2, 1, 5, 6), ncol = 3)
 subj_rhs <- c(100, 600, 300)
-glpk_example(obj, subj_lhs, subj_rhs)
+
+# Bounds
+cols_bnds_type <- rep(GLP_LO, 3)
+cols_bnds_lb <- cols_bnds_ub <- rep(0.0, 3)
+
+rows_bnds_type <- rep(GLP_UP, 3)
+rows_bnds_lb <- rep(0.0, 3)
+rows_bnds_ub <- subj_rhs
+
+glpk_example(
+  obj, subj_lhs, subj_rhs,
+  cols_bnds_type, cols_bnds_lb, cols_bnds_ub,
+  rows_bnds_type, rows_bnds_lb, rows_bnds_ub,
+  DIR = GLP_MAX
+  )
 }

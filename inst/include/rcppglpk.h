@@ -8,15 +8,6 @@ using namespace Rcpp;
 
 namespace rcppglpk {
 
-
-  // "Row indices of each element are stored in the array ia, column indices are stored in
-  // the array ja, and numerical values of corresponding elements are stored in the array ar."
-  // So... data must be presented as:
-  // (Row, Column, Data) arrays of vectors starting at 1 (not 0)
-
-  // Function to arrange a numeric matrix as the desired form of array for GLPK.
-
-
   class LP {
 
   public:
@@ -26,6 +17,12 @@ namespace rcppglpk {
       const Rcpp::NumericVector & coef,
       const Rcpp::NumericMatrix & subj_lhs,
       const Rcpp::NumericVector & subj_rhs,
+      const Rcpp::IntegerVector & rows_bnds_type,
+      const Rcpp::NumericVector & rows_bnds_lb,
+      const Rcpp::NumericVector & rows_bnds_ub,
+      const Rcpp::IntegerVector & cols_bnds_type,
+      const Rcpp::NumericVector & cols_bnds_lb,
+      const Rcpp::NumericVector & cols_bnds_ub,
       int DIR
     );
 
@@ -65,7 +62,7 @@ namespace rcppglpk {
     // Retrieving data -----------------------------------------------------------
     Rcpp::List getSol();
 
-    void as_glpk_array(const Rcpp::NumericMatrix & x,int *ai, int *aj,double *av);
+    // void as_glpk_array(const Rcpp::NumericMatrix & x,int *ai, int *aj,double *av);
 
   private:
     glp_prob *lp;
@@ -78,7 +75,13 @@ namespace rcppglpk {
 
   };
 
-  inline void LP::as_glpk_array(
+  // "Row indices of each element are stored in the array ia, column indices are stored in
+  // the array ja, and numerical values of corresponding elements are stored in the array ar."
+  // So... data must be presented as:
+  // (Row, Column, Data) arrays of vectors starting at 1 (not 0)
+
+  // Function to arrange a numeric matrix as the desired form of array for GLPK.
+  inline void as_glpk_array(
       const Rcpp::NumericMatrix & x,
       int *ai, int *aj,
       double *av
@@ -160,6 +163,12 @@ namespace rcppglpk {
     const Rcpp::NumericVector & coef,
     const Rcpp::NumericMatrix & subj_lhs,
     const Rcpp::NumericVector & subj_rhs,
+    const Rcpp::IntegerVector & cols_bnds_type,
+    const Rcpp::NumericVector & cols_bnds_lb,
+    const Rcpp::NumericVector & cols_bnds_ub,
+    const Rcpp::IntegerVector & rows_bnds_type,
+    const Rcpp::NumericVector & rows_bnds_lb,
+    const Rcpp::NumericVector & rows_bnds_ub,
     int DIR
   ) {
 
@@ -179,11 +188,11 @@ namespace rcppglpk {
 
     // We want to maximize
     this->add_rows(nrows);
-    this->set_row_bnds(GLP_UP, 0.0, subj_rhs);
+    this->set_row_bnds(rows_bnds_type, rows_bnds_lb, rows_bnds_ub);
     this->add_cols(ncols);
 
     // Setting bounds and objective coefficient
-    this->set_col_bnds(GLP_LO, 0.0, 0.0);
+    this->set_col_bnds(cols_bnds_type, cols_bnds_lb, cols_bnds_ub);
     this->set_obj_coef(coef);
 
 
