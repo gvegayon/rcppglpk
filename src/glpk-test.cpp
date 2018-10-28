@@ -3,12 +3,35 @@
 using namespace Rcpp;
 
 
-//' A mininmal example
+//' Simplex LP solver
+//'
 //' @param obj Numeric vector of size \eqn{K}. Coeficients in the objective function.
 //' @param subj_lhs Numeric matrix of size \eqn{K\times m}. Constraints.
+//' @param subj_rhs Numeric vector of size \eqn{1\times m}. Constraints.
 //' @param pname Character scalar. Name of the LP.
+//' @param cols_bnds_type,cols_bnds_lb,cols_bnds_ub passed to `glp_set_col_bnds`
+//' @param rows_bnds_type,rows_bnds_lb,rows_bnds_ub passed to `glp_set_row_bnds`
+//' @param DIR Integer. Type of problem (see [GLP_MAX]).
 //' @export
+//'
 //' @examples
+//' # Brief example from de glpk manual:
+//' # max:
+//' #   z = 10x_1 + 6x_2 + 4x_3
+//' #
+//' # subject to:
+//' #   p = x_1 + x_2 + x_3
+//' #   q = 10x_1 + 4x_2 + 5x_3
+//' #   r = 2x_1 + 2x_2 + 6x_3
+//' #
+//' # And bounds of variables
+//' #   p <= 100, 0 <= x_1
+//' #   q <= 600, 0 <= x_2
+//' #   r <= 300, 0 <= x_3
+//' #
+//' # Where (p,q,r) are auxiliary variables, and (x_1,x_2,x_2) are
+//' # structural variables.
+//'
 //' obj      <- c(10, 6, 4)
 //' subj_lhs <- matrix(c(1, 10, 2, 1, 4, 2, 1, 5, 6), ncol = 3)
 //' subj_rhs <- c(100, 600, 300)
@@ -21,14 +44,14 @@ using namespace Rcpp;
 //' rows_bnds_lb <- rep(0.0, 3)
 //' rows_bnds_ub <- subj_rhs
 //'
-//' glpk_example(
+//' lp(
 //'   obj, subj_lhs, subj_rhs,
 //'   cols_bnds_type, cols_bnds_lb, cols_bnds_ub,
 //'   rows_bnds_type, rows_bnds_lb, rows_bnds_ub,
 //'   DIR = GLP_MAX
 //'   )
 // [[Rcpp::export]]
-List glpk_example(
+List lp(
     const NumericVector & obj,
     const NumericMatrix & subj_lhs,
     const NumericVector & subj_rhs,

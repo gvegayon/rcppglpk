@@ -6,9 +6,9 @@
 
 using namespace Rcpp;
 
-// glpk_example
-List glpk_example(const NumericVector& obj, const NumericMatrix& subj_lhs, const NumericVector& subj_rhs, const IntegerVector& cols_bnds_type, const NumericVector& cols_bnds_lb, const NumericVector& cols_bnds_ub, const IntegerVector& rows_bnds_type, const NumericVector& rows_bnds_lb, const NumericVector& rows_bnds_ub, int DIR, const StringVector pname);
-RcppExport SEXP _rcppglpk_glpk_example(SEXP objSEXP, SEXP subj_lhsSEXP, SEXP subj_rhsSEXP, SEXP cols_bnds_typeSEXP, SEXP cols_bnds_lbSEXP, SEXP cols_bnds_ubSEXP, SEXP rows_bnds_typeSEXP, SEXP rows_bnds_lbSEXP, SEXP rows_bnds_ubSEXP, SEXP DIRSEXP, SEXP pnameSEXP) {
+// lp
+List lp(const NumericVector& obj, const NumericMatrix& subj_lhs, const NumericVector& subj_rhs, const IntegerVector& cols_bnds_type, const NumericVector& cols_bnds_lb, const NumericVector& cols_bnds_ub, const IntegerVector& rows_bnds_type, const NumericVector& rows_bnds_lb, const NumericVector& rows_bnds_ub, int DIR, const StringVector pname);
+RcppExport SEXP _rcppglpk_lp(SEXP objSEXP, SEXP subj_lhsSEXP, SEXP subj_rhsSEXP, SEXP cols_bnds_typeSEXP, SEXP cols_bnds_lbSEXP, SEXP cols_bnds_ubSEXP, SEXP rows_bnds_typeSEXP, SEXP rows_bnds_lbSEXP, SEXP rows_bnds_ubSEXP, SEXP DIRSEXP, SEXP pnameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,13 +23,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type rows_bnds_ub(rows_bnds_ubSEXP);
     Rcpp::traits::input_parameter< int >::type DIR(DIRSEXP);
     Rcpp::traits::input_parameter< const StringVector >::type pname(pnameSEXP);
-    rcpp_result_gen = Rcpp::wrap(glpk_example(obj, subj_lhs, subj_rhs, cols_bnds_type, cols_bnds_lb, cols_bnds_ub, rows_bnds_type, rows_bnds_lb, rows_bnds_ub, DIR, pname));
+    rcpp_result_gen = Rcpp::wrap(lp(obj, subj_lhs, subj_rhs, cols_bnds_type, cols_bnds_lb, cols_bnds_ub, rows_bnds_type, rows_bnds_lb, rows_bnds_ub, DIR, pname));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_rcppglpk_glpk_example", (DL_FUNC) &_rcppglpk_glpk_example, 11},
+    {"_rcppglpk_lp", (DL_FUNC) &_rcppglpk_lp, 11},
     {NULL, NULL, 0}
 };
 
